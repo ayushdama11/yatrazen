@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from 'sonner';
 import { SelectBudgetOptions, SelectTravelsList } from '../constants/options';
+import { AI_PROMPT } from '../constants/options';
+import { chatSession } from '../service/AIModal';
 
 const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY; // Fixed API key import
 
 function CreateTrip() {
   const [place, setPlace] = useState();
-
   const [formData, setFormData] = useState([]);
 
   const handleInputChange = (name,value)=>{
@@ -26,11 +28,25 @@ function CreateTrip() {
     console.log(formData);
   }, [formData])
 
-  const onGenerateTrip=()=>{
-    if(formData?.noOfDays>5) {
+  const onGenerateTrip=async ()=>{
+    if(formData?.noOfDays>5 && !formData?.location || !formData?.budget || !formData.traveler) {
+      toast("Please fill all the details !!")
       return;
     }
-    console.log(formData);
+
+    // after user clicks on the generate trip button - update prompt
+    const FINAL_PROMPT = AI_PROMPT
+    .replace('{location}',formData?.location?.label)
+    .replace('{totalDays}',formData?.noOfDays)
+    .replace('{traveler}', formData?.traveler)
+    .replace('{budget}', formData?.budget)
+    .replace('{totalDays}',formData?.noOfDays)
+
+    console.log(FINAL_PROMPT)
+
+    const result = await chatSession.sendMessage(FINAL_PROMPT);
+
+    console.log(result?.response?.text());
   }
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 items-center w-screen'>
