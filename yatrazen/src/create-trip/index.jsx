@@ -6,12 +6,29 @@ import { toast } from 'sonner';
 import { SelectBudgetOptions, SelectTravelsList } from '../constants/options';
 import { AI_PROMPT } from '../constants/options';
 import { chatSession } from '../service/AIModal';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
-const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY; // Fixed API key import
+
+const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY; 
 
 function CreateTrip() {
   const [place, setPlace] = useState();
   const [formData, setFormData] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  }
 
   const handleInputChange = (name,value)=>{
     if(name=='noOfDays' && value>5) {
@@ -28,7 +45,18 @@ function CreateTrip() {
     console.log(formData);
   }, [formData])
 
+  const login = useGoogleLogin({
+    onSuccess: (codeResp) => GetUserProfile(codeResp),
+    onError: (error) => console.error('Login Failed:', error),
+  })
+
   const onGenerateTrip=async ()=>{
+    const user = localStorage.getItem('user');
+    if(!user) {
+      setOpenDialog(true)
+      return;
+    }
+
     if(formData?.noOfDays>5 && !formData?.location || !formData?.budget || !formData.traveler) {
       toast("Please fill all the details !!")
       return;
@@ -48,6 +76,22 @@ function CreateTrip() {
 
     console.log(result?.response?.text());
   }
+
+  const GetUserProfile = (tokenInfo) => {
+    console.log("Token Info: ", tokenInfo);
+    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
+      headers: {
+        Authorization: `Bearer ${tokenInfo?.access_token}`,
+        Accept: 'Application/json'
+      }
+    }).then((resp) => {
+      console.log("User Info: ", resp.data);  // Added .data to access the response data
+      localStorage.setItem('user', JSON.stringify(resp.data));
+      setOpenDialog(false);
+      onGenerateTrip();
+    })
+  }
+
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 items-center w-screen'>
       <h2 className='font-bold text-3xl'>Tell us your travel preferences 🚙🌴</h2>
@@ -113,6 +157,26 @@ function CreateTrip() {
       <div className='my-10 justify-end flex'>
         <Button onClick={onGenerateTrip}>Generate Trip</Button>
       </div>
+      
+      <Dialog open={openDialog} onOpenChange={handleCloseDialog} > 
+      <DialogContent>
+        <DialogHeader>
+          <DialogDescription>
+            <h1 className="h-8 sm:h-15 md:h-16 rounded-xl text-[#FF3B30] font-bold">yatrazen!!</h1>
+            <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
+            <p>Sign in to the app with google authentication securely</p>
+            <Button
+              onClick={login}
+              className="w-full mt-5 flex gap-4 items-center">
+              <FcGoogle  />
+              Sign In With Google
+            </Button>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+
+
     </div>
   );
 }
