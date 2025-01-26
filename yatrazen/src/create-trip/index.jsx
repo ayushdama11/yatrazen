@@ -17,7 +17,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-
+import { doc, setDoc } from "firebase/firestore"; 
 
 const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY; 
 
@@ -25,6 +25,8 @@ function CreateTrip() {
   const [place, setPlace] = useState();
   const [formData, setFormData] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
@@ -51,6 +53,7 @@ function CreateTrip() {
   })
 
   const onGenerateTrip=async ()=>{
+
     const user = localStorage.getItem('user');
     if(!user) {
       setOpenDialog(true)
@@ -61,6 +64,8 @@ function CreateTrip() {
       toast("Please fill all the details !!")
       return;
     }
+
+    setLoading(true);
 
     // after user clicks on the generate trip button - update prompt
     const FINAL_PROMPT = AI_PROMPT
@@ -75,6 +80,22 @@ function CreateTrip() {
     const result = await chatSession.sendMessage(FINAL_PROMPT);
 
     console.log(result?.response?.text());
+    setLoading(false);
+
+    SaveAiTrip(result?.response?.text());
+  }
+
+  const SaveAiTrip = async(TripData)=>{
+    setLoading(true);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const docId = Date.now().toString()
+    await setDoc(doc(db, "AITTrips", docId), {
+      userSelection: formData,
+      tripdata:TripData,
+      userEmail:user?.email,
+      id:docId
+    });
+    setLoading(false);
   }
 
   const GetUserProfile = (tokenInfo) => {
