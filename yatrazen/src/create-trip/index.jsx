@@ -18,6 +18,9 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { doc, setDoc } from "firebase/firestore"; 
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { db } from '../service/firebaseConfig';
+import { useNavigate } from 'react-router-dom';
 
 const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY; 
 
@@ -27,6 +30,8 @@ function CreateTrip() {
   const [openDialog, setOpenDialog] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();   // for navigating to the view-trip page
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
@@ -83,19 +88,22 @@ function CreateTrip() {
     setLoading(false);
 
     SaveAiTrip(result?.response?.text());
+
   }
 
   const SaveAiTrip = async(TripData)=>{
     setLoading(true);
     const user = JSON.parse(localStorage.getItem('user'));
     const docId = Date.now().toString()
-    await setDoc(doc(db, "AITTrips", docId), {
+    await setDoc(doc(db, "AITrips", docId), {
       userSelection: formData,
-      tripdata:TripData,
+      tripdata:JSON.parse(TripData),
       userEmail:user?.email,
       id:docId
     });
     setLoading(false);
+
+    navigate('/view-trip/' + docId);
   }
 
   const GetUserProfile = (tokenInfo) => {
@@ -176,7 +184,12 @@ function CreateTrip() {
       </div>
 
       <div className='my-10 justify-end flex'>
-        <Button onClick={onGenerateTrip}>Generate Trip</Button>
+        <Button
+         disabled={loading}
+         onClick={onGenerateTrip}>
+          {loading?
+          (<AiOutlineLoading3Quarters className='h-7 w-7 animate-spin' />) : ('Generate Trip')}
+          </Button>
       </div>
       
       <Dialog open={openDialog} onOpenChange={handleCloseDialog} > 
@@ -187,11 +200,12 @@ function CreateTrip() {
             <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
             <p>Sign in to the app with google authentication securely</p>
             <Button
+              disabled={loading}
               onClick={login}
               className="w-full mt-5 flex gap-4 items-center">
-              <FcGoogle  />
-              Sign In With Google
-            </Button>
+                <FcGoogle  />
+                Sign In With Google
+              </Button>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
