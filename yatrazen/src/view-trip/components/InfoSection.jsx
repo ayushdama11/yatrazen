@@ -3,8 +3,7 @@ import { Button } from '@/components/ui/button'
 import { IoIosSend } from "react-icons/io";
 import { GetPlaceDetails } from '../../service/GlobalApi';
 import axios from "axios"
-
-const PHOTO_REF_URL = 'https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=1000&maxWidthPx=1000&key=' + import.meta.env.VITE_GOOGLE_PLACE_API_KEY
+import { PHOTO_REF_URL } from '../../service/GlobalApi';
 
 function InfoSection({ trip }) {
 
@@ -31,7 +30,7 @@ function InfoSection({ trip }) {
   return (
     <div>
       <img 
-        src= {PhotoUrl} 
+        src= {PhotoUrl ? PhotoUrl : 'https://placehold.co/300x300'} 
         alt="Trip Image" 
         className='h-[340px] w-full object-cover rounded-xl'
       />
