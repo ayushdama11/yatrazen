@@ -50,4 +50,40 @@ export const SelectBudgetOptions=[
     },
 ]
 
-export const AI_PROMPT = 'Generate Travel Plan for Location : {location}, for {totalDays} Days for {traveler} with a {budget} budget, give me a hotels options list with hotelname, hotel address, price , hotel image url, geo coordinates, rating, descriptions and suggest itinerary(in array format) with placeName, place details, place image url,geo coordinates, ticket pricing,rating, time to travel(start time - end time only) each of the location, and also approx time it will take to travel that location(format- x hour y minutes) for {totalDays} days with each day plan with "best time slot to visit" in JSON format.'
+export const AI_PROMPT = `
+Generate a Travel Plan for Location: {location}, for {totalDays} Days for {traveler} with a {budget} budget.
+
+Provide the response in JSON format with the following structure:
+{
+  "hotels": [
+    {
+      "hotelName": "string",
+      "hotelAddress": "string",
+      "price": "number",
+      "hotelImageUrl": "string",
+      "geoCoordinates": { "latitude": "number", "longitude": "number" },
+      "rating": "number",
+      "description": "string"
+    }
+  ],
+  "itinerary": [
+    {
+      "day": "number",
+      "places": [
+        {
+          "placeName": "string",
+          "placeDetails": "string",
+          "placeImageUrl": "string",
+          "geoCoordinates": { "latitude": "number", "longitude": "number" },
+          "ticketPricing": "string",
+          "rating": "number",
+          "travelTime": "string",
+          "bestTimeSlotToVisit": "string",
+          "timeToTravel": "string"
+        }
+      ]
+    }
+  ]
+}
+Ensure "itinerary" is always an array containing "day" keys, with each day's "places" as an array.
+`

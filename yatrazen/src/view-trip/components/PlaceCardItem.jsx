@@ -38,7 +38,7 @@ function PlaceCardItem({place}) {
         <div>
             <h2 className='font-bold text-lg'>{place.placeName}</h2>
             <p className='text-sm text-gray-500'>{place.placeDetails}</p>
-            <h2 className='mt-2 font-medium'>🕒{place.travelDuration}</h2>
+            <h2 className='mt-2 font-medium'>💵 {place.ticketPricing}</h2>
             <Button className='mt-1 bg-red-500' size="sm"><FaMapLocationDot /> Let's Check</Button>
         </div>
       </div>
