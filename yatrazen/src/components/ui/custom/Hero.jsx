@@ -20,7 +20,7 @@ function Hero() {
         <Button className="text-sm sm:text-base md:text-lg px-6 py-3">Get Started, It's Free</Button>
       </Link>
 
-      <img src="/mockup.png" alt="" />
+      <img src="/mockup.png" className='' alt="" />
     </div>
   );
 }
