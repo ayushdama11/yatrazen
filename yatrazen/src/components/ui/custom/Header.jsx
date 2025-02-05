@@ -60,11 +60,11 @@ function Header() {
      className="w-screen p-1 shadow-sm flex justify-between items-center px-1 bg-white"
      >
       <a href="/">
-        <img src="/yatrazen.png" className="h-[20px]" alt="" />
+        <img src="/yatrazen.png" className="h-[15px] md:h-[20px]" alt="" />
       </a>
       <div>
         {user ? 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 md:gap-3">
           <a href="/create-trip">
           <Button variant="outline" className="rounded-full text-black ">+ Create Trip</Button>
           </a>
