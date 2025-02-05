@@ -11,5 +11,6 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',  // Use esnext or specify a modern target like 'chrome89', 'firefox90', etc.
+    outDir: 'dist'
   },
 });
