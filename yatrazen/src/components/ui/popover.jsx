@@ -12,13 +12,13 @@ const PopoverContent = React.forwardRef(({ className, align = "center", sideOffs
     <PopoverPrimitive.Content
       ref={ref}
       align={align}
-      sideOffset={sideOffset}
+      // sideOffset={sideOffset}
       style={{ 
         backgroundColor: 'white', 
         background: 'white' 
       }}
       className={cn(
-        "z-50 w-72 rounded-md border p-4 text-black shadow-md outline-none bg-white",
+        "z-50 w-72 rounded-md border-white p-4 text-black shadow-md outline-none bg-white",
         className
       )}
       {...props}

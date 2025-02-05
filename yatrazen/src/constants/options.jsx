@@ -53,9 +53,9 @@ export const SelectBudgetOptions=[
 export const AI_PROMPT = `
 Generate a Travel Plan for Location: {location}, for {totalDays} Days for {traveler} with a {budget} budget.
 
-Provide the response in JSON format with the following structure:
+Provide the response in JSON format with the following structure: 
 {
-  "hotels": [
+  "hotelOptions": [ -- minimum 4 hotels neccesary
     {
       "hotelName": "string",
       "hotelAddress": "string",

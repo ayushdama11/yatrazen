@@ -196,7 +196,7 @@ function CreateTrip() {
       <DialogContent>
         <DialogHeader>
           <DialogDescription>
-            <h1 className="h-8 sm:h-15 md:h-16 rounded-xl text-[#FF3B30] font-bold">yatrazen!!</h1>
+          <img src="/yatrazen.png" className="h-[20px]" alt="" />
             <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
             <p>Sign in to the app with google authentication securely</p>
             <Button
