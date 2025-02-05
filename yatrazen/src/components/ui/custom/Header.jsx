@@ -57,7 +57,7 @@ function Header() {
 
   return (
     <div
-     className="w-screen p-1 shadow-sm flex justify-between items-center px-5 bg-white"
+     className="w-screen p-1 shadow-sm flex justify-between items-center px-1 bg-white"
      >
       <a href="/">
         <img src="/yatrazen.png" className="h-[20px]" alt="" />
