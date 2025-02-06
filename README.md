@@ -1,0 +1,55 @@
+# Zenyatra - AI-Based Trip Planner
+
+Zenyatra is an AI-powered trip planning website that helps users create personalized travel itineraries. Using AI, it considers various factors such as budget, number of days, and group size to provide optimized travel plans.
+
+## Features
+- AI-powered trip planning with Gemini API
+- User-friendly interface built with React
+- Real-time database storage using Firebase
+- Responsive design with Tailwind CSS
+
+## Tech Stack
+- **Frontend:** React.js, Tailwind CSS
+- **Backend:** Firebase (Firestore for database, Firebase Authentication)
+- **AI Integration:** Gemini API
+
+## Installation & Setup
+Follow these steps to run Zenyatra on your local machine:
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/ayushdama11/zenyatra.git
+   cd zenyatra
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Set up Firebase:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   - Enable Firestore Database and Firebase Authentication
+   - Create a `.env` file in the root directory and add your Firebase config:
+     ```env
+     REACT_APP_FIREBASE_API_KEY=your_api_key
+     REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+     REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+     REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+     REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+     REACT_APP_FIREBASE_APP_ID=your_app_id
+     ```
+4. Run the project:
+   ```sh
+   npm start
+   ```
+
+## Usage
+1. Enter trip details (destination, budget, number of travelers, days, etc.)
+2. AI generates an optimized itinerary
+3. Users can customize and save their itinerary
+
+## Contributing
+Feel free to contribute by opening issues or submitting pull requests!
+
+## Contact
+For any queries, reach out to me at [ayushdama07@gmail.com] or visit my GitHub profile at [GitHub](https://github.com/ayushdama11).
+
