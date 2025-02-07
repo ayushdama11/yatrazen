@@ -25,17 +25,14 @@ Follow these steps to run Zenyatra on your local machine:
    ```sh
    npm install
    ```
-3. Set up Firebase:
+3. Set up Firebase and API keys:
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
    - Enable Firestore Database and Firebase Authentication
-   - Create a `.env` file in the root directory and add your Firebase config:
+   - Create a `.env` file in the root directory and add your API configurations:
      ```env
-     REACT_APP_FIREBASE_API_KEY=your_api_key
-     REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
-     REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-     REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-     REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-     REACT_APP_FIREBASE_APP_ID=your_app_id
+     VITE_GOOGLE_PLACE_API_KEY=your_google_place_api_key
+     VITE_GOOGLE_GEMINI_AI_API_KEY=your_gemini_ai_api_key
+     VITE_GOOGLE_AUTH_CLIENT_ID=your_google_auth_client_id
      ```
 4. Run the project:
    ```sh
