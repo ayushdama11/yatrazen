@@ -1,52 +1,50 @@
-# Zenyatra - AI-Based Trip Planner
+# YatraZen - AI-Based Trip Planner
 
-Zenyatra is an AI-powered trip planning website that helps users create personalized travel itineraries. Using AI, it considers various factors such as budget, number of days, and group size to provide optimized travel plans.
+## 🚀 Project Setup
 
-## Features
-- AI-powered trip planning with Gemini API
-- User-friendly interface built with React
-- Real-time database storage using Firebase
-- Responsive design with Tailwind CSS
+Follow these steps to set up and run the project locally.
 
-## Tech Stack
-- **Frontend:** React.js, Tailwind CSS
-- **Backend:** Firebase (Firestore for database, Firebase Authentication)
-- **AI Integration:** Gemini API
+### 1️⃣ Clone the Repository
+```sh
+git clone https://github.com/ayushdama11/yatrazen.git
+cd yatrazen
+```
 
-## Installation & Setup
-Follow these steps to run Zenyatra on your local machine:
+### 2️⃣ Install Dependencies
+```sh
+npm install  # or yarn install
+```
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/ayushdama11/zenyatra.git
-   cd zenyatra
-   ```
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-3. Set up Firebase and API keys:
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable Firestore Database and Firebase Authentication
-   - Create a `.env` file in the root directory and add your API configurations:
-     ```env
-     VITE_GOOGLE_PLACE_API_KEY=your_google_place_api_key
-     VITE_GOOGLE_GEMINI_AI_API_KEY=your_gemini_ai_api_key
-     VITE_GOOGLE_AUTH_CLIENT_ID=your_google_auth_client_id
-     ```
-4. Run the project:
-   ```sh
-   npm start
-   ```
+### 3️⃣ Set Up Environment Variables
+Create a `.env.local` file in the root directory and add the following variables:
 
-## Usage
-1. Enter trip details (destination, budget, number of travelers, days, etc.)
-2. AI generates an optimized itinerary
-3. Users can customize and save their itinerary
+```sh
+VITE_GOOGLE_PLACE_API_KEY=your_google_place_api_key
+VITE_GOOGLE_GEMINI_AI_API_KEY=your_google_gemini_ai_api_key
+VITE_GOOGLE_AUTH_CLIENT_ID=your_google_auth_client_id
 
-## Contributing
-Feel free to contribute by opening issues or submitting pull requests!
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
+```
 
-## Contact
-For any queries, reach out to me at [ayushdama07@gmail.com] or visit my GitHub profile at [GitHub](https://github.com/ayushdama11).
+**Important:**
+- **Do NOT commit** the `.env.local` file.
+- Add `.env.local` to `.gitignore` to prevent exposing credentials.
+
+### 4️⃣ Start the Development Server
+```sh
+npm run dev  # or yarn dev
+```
+
+### 5️⃣ Deployment Notes
+If deploying to **Vercel, Netlify, or Firebase Hosting**, make sure to add these environment variables in the platform’s dashboard settings.
+
+---
+
+✅ You’re all set! Enjoy using **YatraZen - AI-Based Trip Planner** 🚀
 
