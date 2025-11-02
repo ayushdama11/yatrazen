@@ -27,23 +27,30 @@ function Header() {
     console.log(user);
   },[])
 
+  // for visibility of dialog
   const [openDialog, setOpenDialog] = useState(false);
-  
   const handleCloseDialog = () => {
     setOpenDialog(false);
   }
 
   const [loading, setLoading] = useState(false);
   
+  // setting up google oauth login
   const login = useGoogleLogin({
     onSuccess: (codeResp) => GetUserProfile(codeResp),
     onError: (error) => console.error('Login Failed:', error),
   })
 
+  // for getting user profile from google after login
+  // and then save it in local storage
   const GetUserProfile = (tokenInfo) => {
     console.log("Token Info: ", tokenInfo);
+    // http get request to oauth2 api to get user profile
+    // and then passing the acces token to query parameter
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
       headers: {
+        // bearer token is used to authenticate the user
+        // when we login with google we get acces tken from google which is temporary credential
         Authorization: `Bearer ${tokenInfo?.access_token}`,
         Accept: 'Application/json'
       }

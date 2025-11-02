@@ -17,19 +17,18 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { doc, setDoc } from "firebase/firestore"; 
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { db } from '../service/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { createTrip } from '../service/BackendApi';
 
 const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY; 
 
 function CreateTrip() {
-  const [place, setPlace] = useState();
-  const [formData, setFormData] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [place, setPlace] = useState(); // to store the selected location
+  const [formData, setFormData] = useState([]); // to store the form data
+  const [openDialog, setOpenDialog] = useState(false); // to store the visibility of dialog
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  // loading spinner 
 
   const navigate = useNavigate();   // for navigating to the view-trip page
 
@@ -79,7 +78,6 @@ function CreateTrip() {
     .replace('{traveler}', formData?.traveler)
     .replace('{budget}', formData?.budget)
     .replace('{totalDays}',formData?.noOfDays)
-
     console.log(FINAL_PROMPT)
 
     const result = await chatSession.sendMessage(FINAL_PROMPT);
@@ -88,22 +86,49 @@ function CreateTrip() {
     setLoading(false);
 
     SaveAiTrip(result?.response?.text());
-
   }
 
-  const SaveAiTrip = async(TripData)=>{
+  const SaveAiTrip = async(TripData) => {
     setLoading(true);
     const user = JSON.parse(localStorage.getItem('user'));
-    const docId = Date.now().toString()
-    await setDoc(doc(db, "AITrips", docId), {
-      userSelection: formData,
-      tripdata:JSON.parse(TripData),
-      userEmail:user?.email,
-      id:docId
-    });
-    setLoading(false);
+    
+    try {
+      // Parse the AI response
+      let parsedTripData = JSON.parse(TripData);
+      
+      // Create a request object that matches backend model exactly
+      const createTripRequest = {
+        userEmail: user?.email,
+        userSelection: {
+          location: {
+            label: formData?.location?.label || '',
+            // GooglePlacesAutocomplete returns `value` as an object; backend expects String
+            // Prefer place_id if available, otherwise fall back to the label
+            value: typeof formData?.location?.value === 'string'
+              ? formData.location.value
+              : (formData?.location?.value?.place_id || formData?.location?.label || '')
+          },
+          noOfDays: String(formData?.noOfDays ?? ''),
+          budget: String(formData?.budget ?? ''),
+          traveler: String(formData?.traveler ?? '')
+        },
+        // If backend expects to generate trip itself, comment next line; otherwise ensure it matches TripData model
+        tripData: parsedTripData
+      };
 
-    navigate('/view-trip/' + docId);
+      console.log('Sending request:', JSON.stringify(createTripRequest, null, 2));
+
+      const savedTrip = await createTrip(createTripRequest);
+
+      setLoading(false);
+      navigate('/view-trip/' + savedTrip.id);
+      
+    } catch (error) {
+      console.error('Error saving trip:', error);
+      console.error('Error response:', error.response?.data);
+      setLoading(false);
+      toast('Error saving trip. Please try again.');
+    }
   }
 
   const GetUserProfile = (tokenInfo) => {
@@ -128,6 +153,7 @@ function CreateTrip() {
 
       <div className='mt-20 flex flex-col gap-10'>
         <div>
+        {/* to auto suggest the location from google places api */}
           <h2 className='text-xl my-3 font-medium'>What is your destination of choice?</h2>
           <GooglePlacesAutocomplete 
             apiKey={apiKey} 

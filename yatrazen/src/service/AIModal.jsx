@@ -18,12 +18,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
     export const chatSession = model.startChat({
       generationConfig,
       history: [
+        // user k trf se esa response aega
         {
           role: "user",
           parts: [
             {text: "Generate Travel Plan for location: las vegas, for 3 days for couple with a cheap budget, give me a hotels options list with hotelname, hotel address, price , hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, place details, place image url,geo coordinates, ticket pricing,rating, time to travel each of the location for 3 days with each day plan with best time to visit in JSON format."},
           ],
         },
+        // model k trf se esa response aega
         {
           role: "model",
           parts: [

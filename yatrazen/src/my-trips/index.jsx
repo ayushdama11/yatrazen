@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from '../service/firebaseConfig';
+import { getUserTrips } from '../service/BackendApi';
+import { toast } from 'sonner';
 import UserTripCardItem from './components/UserTripCardItem';
 
 function MyTrips() {
@@ -20,18 +20,12 @@ function MyTrips() {
       return;
     }
 
-    // If user exists, fetch the trips
-    const q = query(collection(db, 'AITrips'), where('userEmail', '==', user?.email));
     try {
-      const querySnapshot = await getDocs(q);
-      const trips = [];
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        trips.push(doc.data()); // Collect all trips in an array
-      });
-      setUserTrips(trips); // Update the state with all the trips
+      const trips = await getUserTrips(user.email);
+      setUserTrips(trips);
     } catch (error) {
       console.error("Error fetching trips:", error);
+      toast('Error loading trips. Please try again.');
     }
   };
 
