@@ -25,12 +25,5 @@ EXPOSE 8080
 # Set default JVM options (override with env var JAVA_OPTS in Render if needed)
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
 
-# Create startup script to handle Firebase credentials and start the app
-RUN echo '#!/bin/sh' > /app/start.sh && \
-    echo 'if [ -n "$FIREBASE_CREDENTIALS" ]; then' >> /app/start.sh && \
-    echo '  echo "$FIREBASE_CREDENTIALS" > /app/serviceKey.json' >> /app/start.sh && \
-    echo 'fi' >> /app/start.sh && \
-    echo 'exec java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar /app/app.jar' >> /app/start.sh && \
-    chmod +x /app/start.sh
-
-ENTRYPOINT ["/app/start.sh"]
+# Start the application
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar /app/app.jar"]
