@@ -39,12 +39,12 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Allow both localhost (dev) and your deployed frontend URL (production)
+        // Allow localhost (dev) and Vercel deployments (production)
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:5173",
             "http://localhost:3000",
-            "https://your-deployed-frontend-url.vercel.app",  // Replace with your actual frontend URL
-            "https://*.vercel.app"  // Allow all Vercel preview deployments
+            "https://yatrazen-tawny.vercel.app/",
+            "https://*.vercel.app"  // Allow all Vercel deployments (production + previews)
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
