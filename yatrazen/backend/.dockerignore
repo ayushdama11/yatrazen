@@ -1,0 +1,11 @@
+target/
+.mvn/
+.mvnw
+mvnw.cmd
+*.log
+*.tmp
+.git
+.gitignore
+.DS_Store
+.env
+serviceKey.json
