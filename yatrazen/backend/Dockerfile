@@ -1,10 +1,10 @@
 # Build stage
-# Updated: 2025-11-06 - Fixed Firebase config path for Render secret files
+# CACHE BUSTER: 2025-11-16-13:35 - Force complete rebuild with fixed Firebase paths
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /workspace
 
 # Add build arg to bust cache when needed
-ARG CACHEBUST=1
+ARG CACHEBUST=2025-11-16-13:35
 
 # copy pom and download dependencies (leverage layer caching)
 COPY pom.xml .
@@ -14,8 +14,8 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 
 # CRITICAL: Force a complete clean build - remove any cached compiled classes
-# Build timestamp to force cache invalidation: 2025-11-06-12:00
-RUN mvn clean package -DskipTests -B -U
+# Timestamp: 2025-11-16-13:35 - Firebase path fix deployed
+RUN rm -rf target/* && mvn clean package -DskipTests -B -U -X
 
 # Runtime stage - use Debian instead of Alpine for gRPC compatibility
 FROM eclipse-temurin:21-jre-jammy
