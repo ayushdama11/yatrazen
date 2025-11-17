@@ -1,27 +1,26 @@
-// post request to google place api
-import axios from "axios"
+import axios from "axios";
 
-const BASE_URL = 'https://places.googleapis.com/v1/places:searchText'
+const BASE_URL = 'https://places.googleapis.com/v1/places:searchText';
+
+const apiKey = import.meta.env.VITE_GOOGLE_PLACE_API_KEY;
 
 const config = {
     headers: {
-        'Content-Type' : 'application/json',
-        'X-Goog-Api-Key' : import.meta.env.VITE_GOOGLE_PLACE_API_KEY,
-        'X-Goog-FieldMask' : [      // Specifies which fields to retrieve from the API response
-            'places.photos',
-            'places.displayName',
-            'places.id'
-        ]
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': apiKey,
+        // This header is mandatory for the new Places API to return the 'places' array
+        'X-Goog-FieldMask': 'places.photos,places.displayName,places.id'
     }
+};
+
+// Function to fetch place details (POST request)
+const GetPlaceDetails = (data) => axios.post(BASE_URL, data, config);
+
+// Helper URL for images
+const PHOTO_REF_URL = 'https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=1000&maxWidthPx=1000&key=' + apiKey;
+
+// Default export to support "GlobalApi.GetPlaceDetails" syntax
+export {
+    GetPlaceDetails,
+    PHOTO_REF_URL
 }
-
-export const GetPlaceDetails = (data) => axios.post(BASE_URL, data, config)
-
-export const PHOTO_REF_URL = 'https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=1000&maxWidthPx=1000&key=' + import.meta.env.VITE_GOOGLE_PLACE_API_KEY
-
-// This function:
-// Takes data (the search query) as an argument.
-// Makes a POST request using axios.post().
-// Sends the request to BASE_URL with:
-// data as the request body (contains the search text).
-// config for headers.
