@@ -2,7 +2,6 @@ import React from 'react';
 import PlaceCardItem from './PlaceCardItem';
 
 function PlacesToVisit({ trip }) {
-    console.log(trip?.tripdata?.itinerary);
     
   return (
     <div>

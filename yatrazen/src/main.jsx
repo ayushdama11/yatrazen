@@ -1,14 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client' // ✅ Import ReactDOM
+import React, { Suspense } from 'react'
+import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import CreateTrip from './create-trip/index.jsx'
 import Header from './components/ui/custom/Header.jsx'
 import { Toaster } from "@/components/ui/sonner"
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import Viewtrip from './view-trip/[tripId]/index.jsx'
-import MyTrips from './my-trips/index.jsx'
+
+const CreateTrip = React.lazy(() => import('./create-trip/index.jsx'));
+const Viewtrip = React.lazy(() => import('./view-trip/[tripId]/index.jsx'));
+const MyTrips = React.lazy(() => import('./my-trips/index.jsx'));
+
+const lazyFallback = () => {
+  <div className="flex items-center justify-center h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+  </div>
+}
 
 const router = createBrowserRouter([
   {
@@ -17,15 +24,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/create-trip',
-    element: <CreateTrip />
+    element: <Suspense fallback={<lazyFallback />}> <CreateTrip /> </Suspense>
   },
   {
     path: '/view-trip/:tripId',
-    element: <Viewtrip />
+    element: <Suspense fallback={<lazyFallback />}> <Viewtrip /> </Suspense>
   },
   {
     path: '/my-trips',
-    element: <MyTrips />
+    element: <Suspense fallback={<lazyFallback />}> <MyTrips /> </Suspense>
   }
 ])
 

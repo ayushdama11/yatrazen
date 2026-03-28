@@ -21,10 +21,8 @@ function Viewtrip () {
       try {
         const tripData = await getTripById(tripId);
         if (tripData) {
-          console.log("Trip data:", tripData);
           setTrip(tripData);
         } else {
-          console.log("No trip found");
           toast('No trip found');
         }
       } catch (error) {

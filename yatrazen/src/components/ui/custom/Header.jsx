@@ -23,9 +23,6 @@ import axios from "axios";
 function Header() {
 
   const user = JSON.parse(localStorage.getItem('user'));
-  useEffect(()=>{
-    console.log(user);
-  },[])
 
   // for visibility of dialog
   const [openDialog, setOpenDialog] = useState(false);

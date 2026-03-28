@@ -33,6 +33,7 @@ function PlaceCardItem({place}) {
             src={PhotoUrl ? PhotoUrl : 'https://placehold.co/300x300'} 
             alt={place.placeName} 
             className='absolute inset-0 w-full h-full rounded-xl object-cover'
+            loading='lazy'
           />
         </div>
         <div>

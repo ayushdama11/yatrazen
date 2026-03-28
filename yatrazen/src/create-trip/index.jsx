@@ -38,7 +38,7 @@ function CreateTrip() {
 
   const handleInputChange = (name,value)=>{
     if(name=='noOfDays' && value>5) {
-      console.log("Please enter Trip Days less than 5")
+      toast("Please enter Trip Days less than 5");
       return;
     }
     setFormData({
