@@ -24,5 +24,6 @@ firebaseConfig.jsx
 *.njsproj
 *.sln
 *.sw?
+backend/node_modules
 
 COMPLETE_SPRINGBOOT_BACKEND_SETUP.txt
