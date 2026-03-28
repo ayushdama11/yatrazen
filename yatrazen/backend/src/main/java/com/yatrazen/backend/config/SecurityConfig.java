@@ -43,7 +43,7 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:5173",
             "http://localhost:3000",
-            "https://yatrazen-tawny.vercel.app/",
+            "https://yatrazen-tawny.vercel.app",
             "https://*.vercel.app"  // Allow all Vercel deployments (production + previews)
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

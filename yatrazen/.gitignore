@@ -27,3 +27,6 @@ firebaseConfig.jsx
 backend/node_modules
 
 COMPLETE_SPRINGBOOT_BACKEND_SETUP.txt
+startapp.txt
+performance_fixes.txt
+cors_fix_guide.txt

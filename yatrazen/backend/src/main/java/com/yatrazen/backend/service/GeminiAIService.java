@@ -16,7 +16,7 @@ public class GeminiAIService {
     private String apiKey;
 
     private final WebClient webClient;
-    private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+    private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
     public GeminiAIService() {
         this.webClient = WebClient.builder().build();
