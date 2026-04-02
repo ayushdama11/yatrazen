@@ -11,10 +11,12 @@ const CreateTrip = React.lazy(() => import('./create-trip/index.jsx'));
 const Viewtrip = React.lazy(() => import('./view-trip/[tripId]/index.jsx'));
 const MyTrips = React.lazy(() => import('./my-trips/index.jsx'));
 
-const lazyFallback = () => {
-  <div className="flex items-center justify-center h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-  </div>
+const LazyFallback = () => {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+    </div>
+  );
 }
 
 const router = createBrowserRouter([
@@ -24,15 +26,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/create-trip',
-    element: <Suspense fallback={<lazyFallback />}> <CreateTrip /> </Suspense>
+    element: <Suspense fallback={<LazyFallback />}> <CreateTrip /> </Suspense>
   },
   {
     path: '/view-trip/:tripId',
-    element: <Suspense fallback={<lazyFallback />}> <Viewtrip /> </Suspense>
+    element: <Suspense fallback={<LazyFallback />}> <Viewtrip /> </Suspense>
   },
   {
     path: '/my-trips',
-    element: <Suspense fallback={<lazyFallback />}> <MyTrips /> </Suspense>
+    element: <Suspense fallback={<LazyFallback />}> <MyTrips /> </Suspense>
   }
 ])
 

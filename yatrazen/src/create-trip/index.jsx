@@ -85,7 +85,20 @@ function CreateTrip() {
     console.log(result?.response?.text());
     setLoading(false);
 
-    SaveAiTrip(result?.response?.text());
+    // Check if AI returned valid trip data
+    const responseText = result?.response?.text();
+    try {
+      const parsed = JSON.parse(responseText);
+      if (parsed.error || (!parsed.hotelOptions && !parsed.itinerary)) {
+        toast(parsed.error || "AI could not generate a trip plan for this destination. Please try another location.");
+        return;
+      }
+    } catch (e) {
+      toast("Failed to parse AI response. Please try again.");
+      return;
+    }
+
+    SaveAiTrip(responseText);
   }
 
   const SaveAiTrip = async(TripData) => {
