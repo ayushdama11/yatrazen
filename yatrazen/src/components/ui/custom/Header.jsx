@@ -41,7 +41,6 @@ function Header() {
   // for getting user profile from google after login
   // and then save it in local storage
   const GetUserProfile = (tokenInfo) => {
-    console.log("Token Info: ", tokenInfo);
     // http get request to oauth2 api to get user profile
     // and then passing the acces token to query parameter
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
@@ -52,7 +51,6 @@ function Header() {
         Accept: 'Application/json'
       }
     }).then((resp) => {
-      console.log("User Info: ", resp.data);  // Added .data to access the response data
       localStorage.setItem('user', JSON.stringify(resp.data));
       setOpenDialog(false);
       window.location.reload();

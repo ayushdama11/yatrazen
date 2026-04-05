@@ -16,10 +16,7 @@ apiClient.interceptors.request.use((config) => {
   if(user?.access_token) {
     config.headers.Authorization = `Bearer ${user.access_token}`;
   }
-  // Debug: log the request body
-  if (config.url === '/trips' && config.method === 'post') {
-    console.log('Request body being sent:', JSON.stringify(config.data, null, 2));
-  }
+
   return config;
 })
 

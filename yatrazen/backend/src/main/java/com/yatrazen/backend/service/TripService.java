@@ -60,7 +60,6 @@ public class TripService {
         Ensure "itinerary" is always an array containing "day" keys, with each day's "places" as an array.
         """;
 
-    // ✅ Fixed method — the only createTrip method
     public Trip createTrip(CreateTripRequest request) throws Exception {
         TripData tripData;
 

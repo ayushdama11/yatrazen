@@ -47,9 +47,7 @@ function CreateTrip() {
     })
   }
 
-  useEffect(()=>{
-    console.log(formData);
-  }, [formData])
+
 
   const login = useGoogleLogin({
     onSuccess: (codeResp) => GetUserProfile(codeResp),
@@ -78,11 +76,11 @@ function CreateTrip() {
     .replace('{traveler}', formData?.traveler)
     .replace('{budget}', formData?.budget)
     .replace('{totalDays}',formData?.noOfDays)
-    console.log(FINAL_PROMPT)
+
 
     const result = await chatSession.sendMessage(FINAL_PROMPT);
 
-    console.log(result?.response?.text());
+
     setLoading(false);
 
     // Check if AI returned valid trip data
@@ -129,7 +127,7 @@ function CreateTrip() {
         tripData: parsedTripData
       };
 
-      console.log('Sending request:', JSON.stringify(createTripRequest, null, 2));
+
 
       const savedTrip = await createTrip(createTripRequest);
 
@@ -145,14 +143,14 @@ function CreateTrip() {
   }
 
   const GetUserProfile = (tokenInfo) => {
-    console.log("Token Info: ", tokenInfo);
+
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
       headers: {
         Authorization: `Bearer ${tokenInfo?.access_token}`,
         Accept: 'Application/json'
       }
     }).then((resp) => {
-      console.log("User Info: ", resp.data);  // Added .data to access the response data
+
       localStorage.setItem('user', JSON.stringify(resp.data));
       setOpenDialog(false);
       onGenerateTrip();
